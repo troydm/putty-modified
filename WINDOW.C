@@ -4105,6 +4105,22 @@ static int TranslateKey(UINT message, WPARAM wParam, LPARAM lParam,
 	    p += sprintf((char *) p, "\x1B[27;6;9~");
 	    return p - output;
 	}
+	if (wParam == VK_UP && shift_state == 3) {	/* Ctrl-Shift-Up */
+	    p += sprintf((char *) p, "\x1B[1;6A");
+	    return p - output;
+	}
+	if (wParam == VK_DOWN && shift_state == 3) {	/* Ctrl-Shift-Down */
+	    p += sprintf((char *) p, "\x1B[1;6B");
+	    return p - output;
+	}
+	if (wParam == VK_RIGHT && shift_state == 3) {	/* Ctrl-Shift-Right */
+	    p += sprintf((char *) p, "\x1B[1;6C");
+	    return p - output;
+	}
+	if (wParam == VK_LEFT && shift_state == 3) {	/* Ctrl-Shift-Left */
+	    p += sprintf((char *) p, "\x1B[1;6D");
+	    return p - output;
+	}
 	if (wParam == VK_TAB && shift_state == 1) {	/* Shift tab */
 	    *p++ = 0x1B;
 	    *p++ = '[';
