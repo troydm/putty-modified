@@ -5868,14 +5868,14 @@ void term_mouse(Terminal *term, Mouse_Button braw, Mouse_Button bcooked,
     term_update(term);
 }
 
-int format_arrow_key(char *buf, Terminal *term, int xkey, int ctrl)
+int format_arrow_key(char *buf, Terminal *term, int xkey, int modifier)
 {
     char *p = buf;
 
     if (term->vt52_mode)
-	p += sprintf((char *) p, "\x1B%c", xkey);
+		p += sprintf((char *) p, "\x1B%c", xkey);
     else {
-	int app_flg = (term->app_cursor_keys && !term->cfg.no_applic_c);
+		int app_flg = (term->app_cursor_keys && !term->cfg.no_applic_c);
 #if 0
 	/*
 	 * RDB: VT100 & VT102 manuals both state the app cursor
@@ -5891,18 +5891,15 @@ int format_arrow_key(char *buf, Terminal *term, int xkey, int ctrl)
 	if (!term->app_keypad_keys)
 	    app_flg = 0;
 #endif
-	/* Useful mapping of Ctrl-arrows */
-	if (ctrl)
-	    app_flg = !app_flg;
-
-	if (ctrl == 1)
-			p += sprintf((char *) p, "\x1B[1;2%c", xkey);
-	else
-		if (app_flg)
-			p += sprintf((char *) p, "\x1BO%c", xkey);
+		if (modifier == 1)
+	    	p += sprintf((char *) p, "\x1B[1;2%c", xkey); /* Shift */
+		else if (modifier)
+			p += sprintf((char *) p, "\x1B[1;5%c", xkey); /* Control */
+		else if (app_flg)
+			p += sprintf((char *) p, "\x1BO%c", xkey); /* Application mode */
 		else
-			p += sprintf((char *) p, "\x1B[%c", xkey);
-		}
+			p += sprintf((char *) p, "\x1B[%c", xkey); /* Normal */
+	}
 
     return p - buf;
 }
