@@ -2,6 +2,7 @@ Modified version of Putty that includes following fixes:
 
 ---------------------------------------------------------
 
+ctrl + arrows correctly mapped
 shift + arrows correctly mapped
 ctrl + shift + arrows correctly mapped
 ctrl+tab & ctrl+shift+tab correctly mapped
