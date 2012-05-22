@@ -2,14 +2,19 @@ Modified version of Putty that includes following fixes:
 
 ---------------------------------------------------------
 
-ctrl + arrows correctly mapped
+alt + arrows correctly mapped
 shift + arrows correctly mapped
 ctrl + shift + arrows correctly mapped
+alt + shift + arrows correctly mapped
 ctrl+tab & ctrl+shift+tab correctly mapped
 
 ---------------------------------------------------------
 
-Created specially for emacs console experience
+Current version: R2
+Provided as a patch file that must be applied to Putty 0.62 source for Windows
+For already compiled version see Downloads
 
-Updated to latest Release 0.61
+Created specially for emacs and vim console experience
+
+Updated to latest Release 0.62
 
