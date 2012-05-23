@@ -1,0 +1,70 @@
+From 3744e8b0ab638a4da753fa474f3ebc07992282cb Mon Sep 17 00:00:00 2001
+From: troydm <d.geurkov@gmail.com>
+Date: Wed, 23 May 2012 17:26:17 +0400
+Subject: [PATCH] modified r3, ctrl+click on link added
+
+---
+ TERMINAL.C |   47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/TERMINAL.C b/TERMINAL.C
+index 0a0ca21..ce8f5e0 100644
+--- a/TERMINAL.C
++++ b/TERMINAL.C
+@@ -5690,6 +5690,53 @@ void term_mouse(Terminal *term, Mouse_Button braw, Mouse_Button bcooked,
+     selpoint.x = x;
+     unlineptr(ldata);
+ 
++	// Open url in browser on ctrl+click
++	if(braw == MBT_LEFT && a == MA_CLICK && ctrl){
++		int i = x;		
++		char buf[512],c;
++		int b = -1, e = -1;
++		int uc;
++		
++		while(i >= 0){
++			uc = ldata->chars[i].chr;
++			uc = term->ucsdata->unitab_line[uc & 0xFF];
++			c = (uc & ~CSET_MASK);
++			if(c == ' ' || c == '[' || c == ']' || c == '(' || c == ')'){
++				b = i+1;
++				break;
++			}
++			i--;
++		}
++		if(b == -1)
++			b = 0;
++		i = x;
++		while(i < ldata->size){
++			uc = ldata->chars[i].chr;
++			uc = term->ucsdata->unitab_line[uc & 0xFF];
++			c = (uc & ~CSET_MASK);
++			if(c == ' ' || c == '[' || c == ']' || c == '(' || c == ')'){
++				e = i-1;
++				break;
++			}
++			i++;
++		}
++		if(e == -1)
++			e = ldata->size - 1;
++		if((e-b) > 2){
++			i = 0;
++			for(;b<=e;b++){
++				uc = ldata->chars[b].chr;
++				uc = term->ucsdata->unitab_line[uc & 0xFF];
++				c = (uc & ~CSET_MASK);
++				buf[i] = c;
++				i++;
++			}
++			buf[i] = '\0';
++
++			ShellExecute(NULL, "open", buf, NULL, NULL, SW_SHOWNORMAL);
++		}
++	}
++
+     /*
+      * If we're in the middle of a selection operation, we ignore raw
+      * mouse mode until it's done (we must have been not in raw mouse
+-- 
+1.7.10.msysgit.1
+

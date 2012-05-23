@@ -6,11 +6,12 @@ alt + arrows correctly mapped
 shift + arrows correctly mapped
 ctrl + shift + arrows correctly mapped
 alt + shift + arrows correctly mapped
-ctrl+tab & ctrl+shift+tab correctly mapped
+ctrl + tab & ctrl + shift + tab correctly mapped
+ctrl + click on link to open it browser
 
 ---------------------------------------------------------
 
-Current version: R2
+Current version: r3
 Provided as a patch file that must be applied to Putty 0.62 source for Windows
 For already compiled version see Downloads
 
